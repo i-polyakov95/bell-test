@@ -4,7 +4,7 @@
             app dark flat
             color="accent"
         )
-            .d-flex.align-center.full-width
+            .d-flex.align-center
                 v-btn(
                     text
                     to='/'
@@ -15,12 +15,25 @@
                     to='/history'
                     color="primary"
                 ) История
-        v-content
+        v-main
             router-view
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'App',
+
+    created () {
+        axios
+            .get('http://localhost:3000')
+            .then(res => {
+                if (res.status != 200) throw new Error('Проверьте, запущено ли API!')
+                else return res.data
+            })
+            .then(data => this.$store.commit('setElements', data))
+            .catch(err => console.error(err))
+    },
 };
 </script>
