@@ -4,17 +4,16 @@
             app dark flat
             color="accent"
         )
-            .d-flex.align-center
-                v-btn(
-                    text
-                    to='/'
-                    color="primary"
-                ) Главная
-                v-btn(
-                    text
-                    to='/history'
-                    color="primary"
-                ) История
+            v-btn(
+                text
+                to='/'
+                color="primary"
+            ) Главная
+            v-btn(
+                text
+                to='/history'
+                color="primary"
+            ) История
         v-main
             router-view
 </template>
@@ -32,7 +31,7 @@ export default {
                 if (res.status != 200) throw new Error('Проверьте, запущено ли API!')
                 else return res.data
             })
-            .then(data => this.$store.commit('setElements', data))
+            .then(data => this.$store.commit('fillUnselectedList', data.items ? data.items : []))
             .catch(err => console.error(err))
     },
 };
