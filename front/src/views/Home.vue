@@ -7,15 +7,15 @@
             )
                 v-card-title Список невыбранных элементов
                 v-text-field.px-5(
-                    label="Filled"
-                    filled
+                    label="Фильтр"
+                    filled clearable
                     v-model="filter"
-                    @change="applyFilter"
                 )
-                v-list(dense)
+                v-list(dense flat subheader)
                     v-list-item(
                         v-for="item in filtered"
                         :key='item.id'
+                        @click=""
                     )
                         v-list-item-content
                             v-list-item-title
@@ -27,15 +27,17 @@
                 tile
             )
                 v-card-title Список выбранных элементов
-                v-list-item(
-                    v-for="item in selected"
-                    :key='item.id'
-                )
-                    v-list-item-content
-                        v-list-item-title
-                            v-btn(icon color="pink" @click="unselectItem(item.id)")
-                                v-icon mdi-minus
-                            |  {{item.name}}
+                v-list(dense flat)
+                    v-list-item(
+                        v-for="item in selected"
+                        :key='item.id'
+                        @click=""
+                    )
+                        v-list-item-content
+                            v-list-item-title
+                                v-btn(icon color="pink" @click="unselectItem(item.id)")
+                                    v-icon mdi-minus
+                                |  {{item.name}}
 </template>
 
 <script>
