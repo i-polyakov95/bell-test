@@ -9,11 +9,23 @@
                 to='/'
                 color="primary"
             ) Главная
-            v-btn(
-                text
-                to='/history'
-                color="primary"
-            ) История
+            v-menu(offset-y open-on-hover)
+                template(v-slot:activator="{ on, attrs }")
+                    v-btn(
+                        text
+                        color="primary"
+                        to='/history?type=all'
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                    ) История
+                v-list
+                    v-list-item(
+                        to='/history?type=selected'
+                    ) История добавлений
+                    v-list-item(
+                        to='/history?type=unselected'
+                    ) История удалений
         v-main
             router-view
 </template>

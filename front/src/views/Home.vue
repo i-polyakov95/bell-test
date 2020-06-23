@@ -1,5 +1,6 @@
 <template lang="pug">
     .home.text-center.pa-10
+        h1.mb-10 Главная
         .d-flex.justify-center
             v-card.unselected.mr-10(
                 min-width="400"
