@@ -19,7 +19,7 @@ export default new Vuex.Store({
             state.listOfUnselected.splice(state.listOfUnselected.indexOf(item), 1);
             state.history.push({
                 item,
-                type: 'select',
+                type: 'selected',
                 date: new Date,
             })
         },
@@ -29,7 +29,7 @@ export default new Vuex.Store({
             state.listOfSelected.splice(state.listOfSelected.indexOf(item), 1)
             state.history.push({
                 item,
-                type: 'unselect',
+                type: 'unselected',
                 date: new Date,
             })
         },
