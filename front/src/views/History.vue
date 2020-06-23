@@ -1,24 +1,40 @@
 <template lang="pug">
     .home.text-center.pa-10
-        h1.mb-10 История
+        h1.mb-10.primary--text История {{type === 'all' ? 'всех действий' : type === 'selected' ? 'добавлений' : 'удалений'}}
         .d-flex.justify-center
-            v-simple-table(height="70vh" style="width: 800px" fixed-header)
-                template(v-slot:default)
-                    thead
-                        tr
-                            th.text-center.small Тип
-                            th.text-left Элемент
-                            th.text-center Время
-                    tbody
-                        tr(v-for="entry in history" :key="`${entry.item.id}-${+entry.date}`")
-                            td.small
-                                v-icon(
-                                    :color="entry.type === 'selected' ? 'green' : 'red'"
-                                    :title="entry.type === 'selected' ? 'Добавлен' : 'Удалён'"
-                                )
-                                    | {{ entry.type === 'selected' ? 'mdi-plus-circle' : 'mdi-minus-circle' }}
-                            td.text-left {{ `[ ${entry.item.id} ]: ${entry.item.name}` }}
-                            td(:title="entry.date | moment('DD.MM.YYYY, HH:mm:ss')") {{ entry.date | moment("from", "now")}}
+            v-card(tile v-if="history && history.length > 0")
+                v-simple-table(
+                    height="70vh"
+                    style="width: 600px;"
+                    fixed-header
+                )
+                    template(v-slot:default)
+                        thead
+                            tr
+                                th.text-center Тип
+                                th.text-left Элемент
+                                th.text-right Время
+                        tbody
+                            tr(v-for="entry in history" :key="`${entry.item.id}-${+entry.date}`")
+                                td.text-center(style="width: 1%")
+                                    v-icon(
+                                        :color="entry.type === 'selected' ? 'green' : 'red'"
+                                        :title="entry.type === 'selected' ? 'Добавлен' : 'Удалён'"
+                                    )
+                                        | {{ entry.type === 'selected' ? 'mdi-plus-circle' : 'mdi-minus-circle' }}
+                                td.text-left.d-flex.align-center
+                                    .index.grey--text(style="width: 40px") {{ entry.item.id }}
+                                    .name {{`${entry.item.name}` }}
+                                td.text-right(
+                                    :title="entry.date | moment('DD.MM.YYYY, HH:mm:ss')"
+                                    style="width:28%"
+                                ) {{ entry.date | moment("DD.MM.YYYY, HH:mm:ss")}}
+            v-alert(
+                v-else
+                dense
+                border="left"
+                type="warning"
+            ) Нет данных
 </template>
 
 <script>
@@ -34,20 +50,5 @@ export default {
             else return 'all'
         }
     },
-
-    mounted () {
-    },
-
-    methods: {
-        moment() {
-            return this.$moment
-        }
-    },
 }
 </script>
-
-<style lang="scss" scoped>
-.small {
-    width: 1%;
-}
-</style>

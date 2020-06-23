@@ -9,7 +9,7 @@
                 to='/'
                 color="primary"
             ) Главная
-            v-menu(offset-y open-on-hover)
+            v-menu(offset-y open-on-hover rounded="b-lg")
                 template(v-slot:activator="{ on, attrs }")
                     v-btn(
                         text
@@ -48,3 +48,13 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+// Vuetify конечно прекрасен (а Quasar ещё лучше), но иногда нужно заниматься такой магией 🤷
+.theme--light.v-list-item--active::before {
+    opacity: 0 !important;
+}
+.theme--light.v-list-item--active:hover::before {
+    opacity: 0.12 !important;
+}
+</style>
