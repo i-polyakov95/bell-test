@@ -6,39 +6,48 @@
                 min-width="400"
                 tile
             )
-                v-card-title Список невыбранных элементов
+                v-card-title.pl-5 Невыбранные элементы
                 v-text-field.px-5(
                     label="Фильтр"
-                    filled clearable
+                    outlined clearable
                     v-model="filter"
+                    append-icon="mdi-magnify"
                 )
                 v-list(dense flat subheader)
-                    v-list-item(
-                        v-for="item in filtered"
-                        :key='item.id'
-                        @click=""
+                    v-virtual-scroll(
+                        :items="filtered"
+                        :item-height="50"
+                        height="550"
                     )
-                        v-list-item-content
-                            v-list-item-title
-                                v-btn(icon color="pink" @click="selectItem(item.id)")
-                                    v-icon mdi-plus
-                                |  {{item.name}}
+                        template(v-slot="{ item }")
+                            v-list-item(
+                                @click=""
+                            )
+                                v-list-item-content
+                                    v-list-item-title
+                                        v-btn(icon color="pink" @click="selectItem(item.id)")
+                                            v-icon mdi-plus
+                                        |  {{item.name}}
             v-card.selected(
                 min-width="400"
                 tile
             )
-                v-card-title Список выбранных элементов
+                v-card-title.pl-5 Выбранные элементы
                 v-list(dense flat)
-                    v-list-item(
-                        v-for="item in selected"
-                        :key='item.id'
-                        @click=""
+                    v-virtual-scroll(
+                        :items="selected"
+                        :item-height="50"
+                        height="620"
                     )
-                        v-list-item-content
-                            v-list-item-title
-                                v-btn(icon color="pink" @click="unselectItem(item.id)")
-                                    v-icon mdi-minus
-                                |  {{item.name}}
+                        template(v-slot="{ item }")
+                            v-list-item(
+                                @click=""
+                            )
+                                v-list-item-content
+                                    v-list-item-title
+                                        v-btn(icon color="pink" @click="unselectItem(item.id)")
+                                            v-icon mdi-minus
+                                        |  {{item.name}}
 </template>
 
 <script>
